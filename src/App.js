@@ -1,9 +1,11 @@
-
+import { Route, Routes } from 'react-router-dom';
 import Breadcrumbs from './components/layouts/breadcrumbs';
 import Footer from './components/layouts/footer';
 import Header from './components/layouts/header';
 import Hero from './components/layouts/hero';
-import Sidebar from './components/layouts/sidebar';
+import Home from './components/pages/home';
+import Shop from './components/pages/shop';
+import AboutUs from './components/pages/aboutus';
 
 function App() {
   
@@ -14,14 +16,11 @@ function App() {
         <Breadcrumbs/>
         <section className="product spad">
           <div className="container">
-              <div className="row">
-                <div className="col-lg-3 col-md-5">
-                    <Sidebar/>
-                </div>
-                <div className="col-lg-9 col-md-7">
-
-                </div>
-              </div>
+              <Routes>
+                <Route path='/' element={<Home/>} />
+                <Route path='/shop' element={<Shop/>} />
+                <Route path='/about-us' element={<AboutUs/>} />
+              </Routes>
             </div>
           </section>
           <Footer/>
