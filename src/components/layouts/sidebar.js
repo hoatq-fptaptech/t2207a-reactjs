@@ -1,19 +1,39 @@
+import { useState,useEffect } from "react";
 export default function Sidebar(){
+    const [categories,setCategories]= useState([]);
+    const [count,setCount]= useState(0);
+    useEffect(()=>{
+        console.log("A");
+    },[categories])
+    useEffect(()=>{
+        console.log("B");
+    },[count]);
+    useEffect(()=>{
+        // là nơi để gọi api lấy data
+        // sau đó set data vào trong các state
+        fetch("https://localhost:7276/api/category")
+        .then(data=>data.json()) // convert string to json object <=> JSON.parse
+        .then(data=>{
+            // set data to state
+            setCategories(data);
+        })
+    },[]);// chir chay 1 lần sau khi làm xong giao diện
+    const changeCount = ()=>{
+        setCount(count+1);
+    }
+
     return (
         <div className="sidebar">
             <div className="sidebar__item">
-                <h4>Department</h4>
+                <h4 onClick={changeCount}>Department: {count}</h4>
                 <ul>
-                    <li><a href="#">Fresh Meat</a></li>
-                    <li><a href="#">Vegetables</a></li>
-                    <li><a href="#">Fruit & Nut Gifts</a></li>
-                    <li><a href="#">Fresh Berries</a></li>
-                    <li><a href="#">Ocean Foods</a></li>
-                    <li><a href="#">Butter & Eggs</a></li>
-                    <li><a href="#">Fastfood</a></li>
-                    <li><a href="#">Fresh Onion</a></li>
-                    <li><a href="#">Papayaya & Crisps</a></li>
-                    <li><a href="#">Oatmeal</a></li>
+                    {
+                        categories.map((e,i)=>{
+                            return (<li key={i}><a href="#">{e.name}</a></li>)
+                        })
+                    }
+                
+                   
                 </ul>
             </div>
             <div className="sidebar__item">
