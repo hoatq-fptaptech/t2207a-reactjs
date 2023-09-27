@@ -1,39 +1,38 @@
 import { useState,useEffect } from "react";
+import api from "../../services/api";
+import url from "../../services/url";
+import { NavLink } from "react-router-dom";
 export default function Sidebar(){
     const [categories,setCategories]= useState([]);
-    const [count,setCount]= useState(0);
-    useEffect(()=>{
-        console.log("A");
-    },[categories])
-    useEffect(()=>{
-        console.log("B");
-    },[count]);
+    
+    const loadCategories = async ()=>{
+        try {
+            const rs = await api.get(url.CATEGORY.LIST);
+            setCategories(rs.data);
+        } catch (error) {           
+        }
+    }
+
     useEffect(()=>{
         // là nơi để gọi api lấy data
         // sau đó set data vào trong các state
-        fetch("https://localhost:7276/api/category")
-        .then(data=>data.json()) // convert string to json object <=> JSON.parse
-        .then(data=>{
-            // set data to state
-            setCategories(data);
-        })
+        loadCategories();
     },[]);// chir chay 1 lần sau khi làm xong giao diện
-    const changeCount = ()=>{
-        setCount(count+1);
-    }
-
+    
     return (
         <div className="sidebar">
             <div className="sidebar__item">
-                <h4 onClick={changeCount}>Department: {count}</h4>
+                <h4>Department</h4>
                 <ul>
                     {
                         categories.map((e,i)=>{
-                            return (<li key={i}><a href="#">{e.name}</a></li>)
+                            return (
+                                <li key={i}>
+                                    <NavLink to={`/category/${e.id}`}>{e.name}</NavLink>
+                                </li>
+                                )
                         })
                     }
-                
-                   
                 </ul>
             </div>
             <div className="sidebar__item">
