@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import url from "../../services/url";
 import { useParams } from "react-router-dom";
+import {default as ProductGrid} from '../views/product'
 
 function Product(){
     const {id} = useParams();
     const [product,setProduct] = useState({});
+    const [relateds,setRelateds] = useState([]);
     const loadProduct = async ()=>{
         try {
             const rs = await api.get(url.PRODUCT.DETAIL+`?id=${id}`);
@@ -14,10 +16,22 @@ function Product(){
             
         }
     }
+    const loadRelateds = async ()=>{
+        try {
+            const rs = await api.get(url.PRODUCT.RELATEDS+`?id=${id}`);
+            setRelateds(rs.data);
+        } catch (error) {
+            
+        }
+    }
     useEffect(()=>{
+        
         loadProduct();
+        loadRelateds();
+       
     },id);
     return (
+        <>
         <div className="row">
             <div className="col-lg-6 col-md-6">
                 <div className="product__details__pic">
@@ -157,6 +171,25 @@ function Product(){
                 </div>
             </div>
         </div>
+        <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title related__product__title">
+                        <h2>Related Product</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+               {    
+                    relateds.map((e,k)=>{
+                        return (
+                            <div key={k} class="col-lg-3 col-md-4 col-sm-6">
+                                <ProductGrid product={e}/>
+                            </div>
+                        )
+                    })
+               }
+            </div>
+        </>
     );
 }
 export default Product;
