@@ -1,12 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import api from "../../services/api";
 import url from "../../services/url";
 import { useParams } from "react-router-dom";
 import {default as ProductGrid} from '../views/product'
+import Context from "../../context/context";
 
 function Product(){
     const {id} = useParams();
-    const [product,setProduct] = useState({});
+    const {state,setState} = useContext(Context);// kết nối đến global state
+    const [product,setProduct] = useState({
+        category:{},
+        buy_qty:1
+    });
     const [relateds,setRelateds] = useState([]);
     const loadProduct = async ()=>{
         try {
@@ -30,6 +35,19 @@ function Product(){
         loadRelateds();
        
     },id);
+    const changeQty = (e)=>{
+        const v = e.target.value;
+        setProduct({...product,buy_qty:v});
+    }
+    const addToCart = ()=>{
+        const cart = state.cart;
+        cart.push(product);
+        setState({...state,cart:cart,loading:true});
+        //x =  [] => [...x,5];
+        setTimeout(()=>{
+            setState({...state,loading:false});
+        },2000);
+    }
     return (
         <>
         <div className="row">
@@ -54,6 +72,7 @@ function Product(){
             <div className="col-lg-6 col-md-6">
                 <div className="product__details__text">
                     <h3>{product.name}</h3>
+                    <h5>{product.category.name}</h5>
                     <div className="product__details__rating">
                         <i className="fa fa-star"></i>
                         <i className="fa fa-star"></i>
@@ -69,11 +88,11 @@ function Product(){
                     <div className="product__details__quantity">
                         <div className="quantity">
                             <div className="pro-qty">
-                                <input type="text" value="1"/>
+                                <input onChange={changeQty} type="text" value={product.buy_qty}/>
                             </div>
                         </div>
                     </div>
-                    <a href="#" className="primary-btn">ADD TO CARD</a>
+                    <button onClick={addToCart} type="button" className="btn primary-btn">ADD TO CART</button>
                     <a href="#" className="heart-icon"><span className="icon_heart_alt"></span></a>
                     <ul>
                         <li><b>Availability</b> <span>In Stock</span></li>

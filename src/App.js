@@ -8,10 +8,16 @@ import Shop from './components/pages/shop';
 import AboutUs from './components/pages/aboutus';
 import Category from './components/pages/category';
 import Product from './components/pages/product';
-
+import { useState } from 'react';
+import STATE from './context/initState';
+import { UserProvider } from './context/context';
 function App() {
-  
+  const [state,setState] = useState(STATE);
   return (
+    <UserProvider value={{state,setState}}>
+    <div id="preloder" style={{opacity:0.8,display:state.loading?"block":"none"}}>
+        <div class="loader"></div>
+    </div>
     <div className="App">
         <Header />
         <Hero/>
@@ -29,6 +35,7 @@ function App() {
           </section>
           <Footer/>
     </div>
+    </UserProvider>
   );
 }
 

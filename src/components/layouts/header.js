@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import Context from "../../context/context";
 
 export default function Header(){
+    const {state,setState} = useContext(Context);
     return (
         <header className="header">
             <div className="header__top">
@@ -67,7 +70,7 @@ export default function Header(){
                         <div className="header__cart">
                             <ul>
                                 <li><a href="#"><i className="fa fa-heart"></i> <span>1</span></a></li>
-                                <li><a href="#"><i className="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                                <li><a href="#"><i className="fa fa-shopping-bag"></i> <span>{state.cart.length}</span></a></li>
                             </ul>
                             <div className="header__cart__price">item: <span>$150.00</span></div>
                         </div>
