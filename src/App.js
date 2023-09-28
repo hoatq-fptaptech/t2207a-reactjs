@@ -7,6 +7,7 @@ import Home from './components/pages/home';
 import Shop from './components/pages/shop';
 import AboutUs from './components/pages/aboutus';
 import Category from './components/pages/category';
+import Product from './components/pages/product';
 
 function App() {
   
@@ -21,6 +22,7 @@ function App() {
                 <Route path='/' element={<Home/>} />
                 <Route path='/shop' element={<Shop/>} />
                 <Route path='/category/:id' element={<Category/>} />
+                <Route path='/product/:id' element={<Product/>} />
                 <Route path='/about-us' element={<AboutUs/>} />
               </Routes>
             </div>
