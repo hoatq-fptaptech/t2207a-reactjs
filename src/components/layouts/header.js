@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import Context from "../../context/context";
 
 export default function Header(){
-    const {state,setState} = useContext(Context);
+    const {state,dispatch} = useContext(Context);
     return (
         <header className="header">
             <div className="header__top">

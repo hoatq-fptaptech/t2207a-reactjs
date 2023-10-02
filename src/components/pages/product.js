@@ -4,10 +4,11 @@ import url from "../../services/url";
 import { useParams } from "react-router-dom";
 import {default as ProductGrid} from '../views/product'
 import Context from "../../context/context";
+import ACTION from "../../context/action";
 
 function Product(){
     const {id} = useParams();
-    const {state,setState} = useContext(Context);// kết nối đến global state
+    const {state,dispatch} = useContext(Context);// kết nối đến global state
     const [product,setProduct] = useState({
         category:{},
         buy_qty:1
@@ -42,10 +43,12 @@ function Product(){
     const addToCart = ()=>{
         const cart = state.cart;
         cart.push(product);
-        setState({...state,cart:cart,loading:true});
+        // setState({...state,cart:cart,loading:true});
+        dispatch({type:ACTION.UPDATE_CART,payload:cart});
         //x =  [] => [...x,5];
         setTimeout(()=>{
-            setState({...state,loading:false});
+            // setState({...state,loading:false});
+            dispatch({type:ACTION.HIDE_LOADING});
         },2000);
     }
     return (
