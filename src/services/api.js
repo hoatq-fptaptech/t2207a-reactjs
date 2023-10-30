@@ -9,7 +9,7 @@ const getJWT = ()=>{
 }
 export default axios.create({
     baseURL: url.BASE_URL,
-    headers:{
-        "Authorization": `Bearer ${getJWT()}`
-    }
+    // headers:{
+    //     "Authorization": `Bearer ${getJWT()}`
+    // }
 });
