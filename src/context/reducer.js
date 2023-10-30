@@ -10,6 +10,7 @@ const reducer = (state,action) => { // gỉa định rằng trong action sẽ c�
         case ACTION.UPDATE_CART: return updateLocalStorage({...state,cart:action.payload,loading:true});
         case ACTION.SHOW_LOADING: return updateLocalStorage({...state,loading: true});
         case ACTION.HIDE_LOADING: return updateLocalStorage({...state,loading: false});
+        case ACTION.LOGIN: return updateLocalStorage({...state,token: action.payload.token,user:action.payload.user,loading: true});
     }
 }
 export default reducer;

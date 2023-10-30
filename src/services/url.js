@@ -9,6 +9,11 @@
         LIST: "/product",
         DETAIL:"/product/get-by-id",
         RELATEDS:"/product/relateds"
+    },
+    USER:{
+        LOGIN:"/auth/login",
+        REGISTER:"/auth/register",
+        PROFILE:"/auth/profile",
     }
 }
 export default url;

@@ -35,7 +35,7 @@ export default function Header(){
                                     </ul>
                                 </div>
                                 <div className="header__top__right__auth">
-                                    <a href="#"><i className="fa fa-user"></i> Login</a>
+                                    <NavLink to="/login"><i className="fa fa-user"></i> Login</NavLink>
                                 </div>
                             </div>
                         </div>
