@@ -1,9 +1,12 @@
-import { useContext } from "react";
+// import { useContext } from "react";
+import { useState } from "react";
+import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import Context from "../../context/context";
+// import Context from "../../context/context";
 
-export default function Header(){
-    const {state,dispatch} = useContext(Context);
+function Header(props){
+    // const {state,dispatch} = useContext(Context);
+    const [abc,setAbc]= useState(0);
     return (
         <header className="header">
             <div className="header__top">
@@ -70,7 +73,7 @@ export default function Header(){
                         <div className="header__cart">
                             <ul>
                                 <li><a href="#"><i className="fa fa-heart"></i> <span>1</span></a></li>
-                                <li><a href="#"><i className="fa fa-shopping-bag"></i> <span>{state.cart.length}</span></a></li>
+                                <li><a href="#"><i className="fa fa-shopping-bag"></i> <span>{props.items.length}</span></a></li>
                             </ul>
                             <div className="header__cart__price">item: <span>$150.00</span></div>
                         </div>
@@ -83,3 +86,10 @@ export default function Header(){
         </header>
     );
 }
+const mapStateToProps = (state, ownProps) => {
+    return {
+        items: state.items
+    }
+}
+export default connect(mapStateToProps,null)(Header);
+// export default Header;
