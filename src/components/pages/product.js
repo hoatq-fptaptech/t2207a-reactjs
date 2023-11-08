@@ -3,12 +3,14 @@ import api from "../../services/api";
 import url from "../../services/url";
 import { useParams } from "react-router-dom";
 import {default as ProductGrid} from '../views/product'
-import Context from "../../context/context";
-import ACTION from "../../context/action";
+import CART_ACTION from "../../redux/cart/action";
+import { connect } from "react-redux";
+// import Context from "../../context/context";
+// import ACTION from "../../context/action";
 
-function Product(){
+function Product(props){
     const {id} = useParams();
-    const {state,dispatch} = useContext(Context);// kết nối đến global state
+    // const {state,dispatch} = useContext(Context);// kết nối đến global state
     const [product,setProduct] = useState({
         category:{},
         buy_qty:1
@@ -41,14 +43,21 @@ function Product(){
         setProduct({...product,buy_qty:v});
     }
     const addToCart = ()=>{
-        const cart = state.cart;
-        cart.push(product);
+        // const cart = state.cart;
+        // cart.push(product);
         // setState({...state,cart:cart,loading:true});
-        dispatch({type:ACTION.UPDATE_CART,payload:cart});
+        // dispatch({type:ACTION.UPDATE_CART,payload:cart});
         //x =  [] => [...x,5];
+
+        // use redux
+        const cart = props.items;
+        cart.push(product);
+
+        props.addCart(cart);
+
         setTimeout(()=>{
             // setState({...state,loading:false});
-            dispatch({type:ACTION.HIDE_LOADING});
+            // dispatch({type:ACTION.HIDE_LOADING});
         },2000);
     }
     return (
@@ -214,4 +223,20 @@ function Product(){
         </>
     );
 }
-export default Product;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        items: state.items?state.items:[]
+    }
+}
+const mapDispatchToProps = (dispatch)=>{
+    return {
+        addCart: (cart)=>{
+            let total = 0;
+            cart.forEach(e => {
+                total += e.price;
+            });
+            dispatch({type:CART_ACTION.UPDATE_CART,payload:{items:cart,total:total}})
+        }
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Product);
