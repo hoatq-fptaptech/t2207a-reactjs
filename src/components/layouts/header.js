@@ -88,7 +88,7 @@ function Header(props){
 }
 const mapStateToProps = (state, ownProps) => {
     return {
-        items: state.items
+        items: state.cartReducers.items
     }
 }
 export default connect(mapStateToProps,null)(Header);

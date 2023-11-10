@@ -5,10 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
-import cartReducers from './redux/cart/reducer';
+import rootReducers from './redux/rootReducers';
 import { Provider } from 'react-redux';
 
-const store = createStore(cartReducers);
+const store = createStore(rootReducers);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
