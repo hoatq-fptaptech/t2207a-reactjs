@@ -13,6 +13,8 @@ import STATE from './context/initState';
 import { UserProvider } from './context/context';
 import reducer from './context/reducer';
 import Login from './components/pages/login';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'; 
+import PayPalBox from './paypal/paypal';
 function App() {
   // const localData = localStorage.getItem("state")?JSON.parse(localStorage.getItem("state")):STATE;
   // const [state,dispatch] = useReducer(reducer,localData);
@@ -35,6 +37,11 @@ function App() {
                 <Route path='/about-us' element={<AboutUs/>} />
                 <Route path='/login' element={<Login/>} />
               </Routes>
+            </div>
+          </section>
+          <section>
+            <div className='container'>
+                <PayPalBox/>
             </div>
           </section>
           <Footer/>
